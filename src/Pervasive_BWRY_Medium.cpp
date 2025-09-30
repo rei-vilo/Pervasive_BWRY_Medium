@@ -48,8 +48,8 @@ void Pervasive_BWRY_Medium::COG_getDataOTP()
     uint16_t _readBytes = 0;
     u_flagOTP = false;
 
-	_chipId = 0x0d04;
-	_readBytes = 112;
+    _chipId = 0x0d04;
+    _readBytes = 112;
 
     // GPIO
     hV_HAL_GPIO_set(b_pin.panelReset);
@@ -71,7 +71,7 @@ void Pervasive_BWRY_Medium::COG_getDataOTP()
     hV_HAL_GPIO_clear(b_pin.panelCS); // Select
     ui16 |= hV_HAL_SPI3_read();
     hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
-	Serial.println(ui16, HEX);
+    Serial.println(ui16, HEX);
     hV_HAL_Serial_crlf();
     if (ui16 == _chipId)
     {
@@ -89,78 +89,78 @@ void Pervasive_BWRY_Medium::COG_getDataOTP()
     uint16_t offset = 0x0000;
 
     hV_HAL_GPIO_clear(b_pin.panelDC); // Command
-	hV_HAL_GPIO_clear(b_pin.panelCS); // Select
-	hV_HAL_SPI3_write(0x90);
-	hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
-	hV_HAL_delayMilliseconds(8);
+    hV_HAL_GPIO_clear(b_pin.panelCS); // Select
+    hV_HAL_SPI3_write(0x90);
+    hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
+    hV_HAL_delayMilliseconds(8);
 
-	hV_HAL_GPIO_clear(b_pin.panelDC); // Command
-	hV_HAL_GPIO_clear(b_pin.panelCS); // Select
-	hV_HAL_SPI3_write(0xa2);
-	hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
+    hV_HAL_GPIO_clear(b_pin.panelDC); // Command
+    hV_HAL_GPIO_clear(b_pin.panelCS); // Select
+    hV_HAL_SPI3_write(0xa2);
+    hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
 
-	hV_HAL_GPIO_set(b_pin.panelDC); // Data
-	hV_HAL_GPIO_clear(b_pin.panelCS); // Select
-	hV_HAL_SPI3_write(0x00);
-	hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
-	hV_HAL_GPIO_clear(b_pin.panelCS); // Select
-	hV_HAL_SPI3_write(0x15);
-	hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
-	hV_HAL_GPIO_clear(b_pin.panelCS); // Select
-	hV_HAL_SPI3_write(0x00);
-	hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
-	hV_HAL_GPIO_clear(b_pin.panelCS); // Select
-	hV_HAL_SPI3_write(0x00);
-	hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
-	hV_HAL_GPIO_clear(b_pin.panelCS); // Select
-	hV_HAL_SPI3_write(0xe0);
-	hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
-	
-	hV_HAL_GPIO_clear(b_pin.panelDC); // Command
-	hV_HAL_GPIO_clear(b_pin.panelCS); // Select
-	hV_HAL_SPI3_write(0x92);
-	hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
+    hV_HAL_GPIO_set(b_pin.panelDC); // Data
+    hV_HAL_GPIO_clear(b_pin.panelCS); // Select
+    hV_HAL_SPI3_write(0x00);
+    hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
+    hV_HAL_GPIO_clear(b_pin.panelCS); // Select
+    hV_HAL_SPI3_write(0x15);
+    hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
+    hV_HAL_GPIO_clear(b_pin.panelCS); // Select
+    hV_HAL_SPI3_write(0x00);
+    hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
+    hV_HAL_GPIO_clear(b_pin.panelCS); // Select
+    hV_HAL_SPI3_write(0x00);
+    hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
+    hV_HAL_GPIO_clear(b_pin.panelCS); // Select
+    hV_HAL_SPI3_write(0xe0);
+    hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
 
-	hV_HAL_GPIO_set(b_pin.panelDC); // Data
-	hV_HAL_GPIO_clear(b_pin.panelCS); // Select
-	ui8 = hV_HAL_SPI3_read();
-	hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
-	// hV_HAL_log(LEVEL_DEBUG, "Dummy read 0x%02x", ui8);
+    hV_HAL_GPIO_clear(b_pin.panelDC); // Command
+    hV_HAL_GPIO_clear(b_pin.panelCS); // Select
+    hV_HAL_SPI3_write(0x92);
+    hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
 
-	hV_HAL_GPIO_clear(b_pin.panelCS); // Select
-	COG_data[0] = hV_HAL_SPI3_read(); // First byte for check
-	hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
-	Serial.println(COG_data[0], HEX);
-	// Check table start and set bank offset
-	if (COG_data[0] == 0xa5)
-	{
-		offset = 0x00;
-	}
-	else
-	{
-		offset = 0x70;
-		for (uint16_t index = 1; index < offset; index += 1)
-		{
-			hV_HAL_GPIO_clear(b_pin.panelCS); // Select
-			hV_HAL_SPI3_read(); // Ignore bytes 1..offset
-			hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
-		}
+    hV_HAL_GPIO_set(b_pin.panelDC); // Data
+    hV_HAL_GPIO_clear(b_pin.panelCS); // Select
+    ui8 = hV_HAL_SPI3_read();
+    hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
+    // hV_HAL_log(LEVEL_DEBUG, "Dummy read 0x%02x", ui8);
 
-		hV_HAL_GPIO_clear(b_pin.panelCS); // Select
-		COG_data[0] = hV_HAL_SPI3_read(); // First byte for check
-		hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
+    hV_HAL_GPIO_clear(b_pin.panelCS); // Select
+    COG_data[0] = hV_HAL_SPI3_read(); // First byte for check
+    hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
+    Serial.println(COG_data[0], HEX);
+    // Check table start and set bank offset
+    if (COG_data[0] == 0xa5)
+    {
+        offset = 0x00;
+    }
+    else
+    {
+        offset = 0x70;
+        for (uint16_t index = 1; index < offset; index += 1)
+        {
+            hV_HAL_GPIO_clear(b_pin.panelCS); // Select
+            hV_HAL_SPI3_read(); // Ignore bytes 1..offset
+            hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
+        }
 
-		if (COG_data[0] == 0xa5) // First byte check = 0xa5
-		{
-			offset = 0x00;
-		}
-		else
-		{
-			hV_HAL_Serial_crlf();
-			hV_HAL_log(LEVEL_CRITICAL, "OTP check 2 failed - Bank %i, first 0x%02x, expected 0x%02x", 0, COG_data[0], 0xa5);
-			hV_HAL_exit(0x01);
-		}
-	}
+        hV_HAL_GPIO_clear(b_pin.panelCS); // Select
+        COG_data[0] = hV_HAL_SPI3_read(); // First byte for check
+        hV_HAL_GPIO_set(b_pin.panelCS); // Unselect
+
+        if (COG_data[0] == 0xa5) // First byte check = 0xa5
+        {
+            offset = 0x00;
+        }
+        else
+        {
+            hV_HAL_Serial_crlf();
+            hV_HAL_log(LEVEL_CRITICAL, "OTP check 2 failed - Bank %i, first 0x%02x, expected 0x%02x", 0, COG_data[0], 0xa5);
+            hV_HAL_exit(0x01);
+        }
+    }
     hV_HAL_log(LEVEL_INFO, "OTP check 2 passed - Bank %i, first 0x%02x as expected", (offset > 0x00), COG_data[0]);
 
     // Populate COG_data
@@ -168,7 +168,7 @@ void Pervasive_BWRY_Medium::COG_getDataOTP()
     {
         digitalWrite(b_pin.panelCS, LOW); // Select
         COG_data[index] = hV_HAL_SPI3_read(); // Read OTP
-		Serial.println(COG_data[index], HEX);
+        Serial.println(COG_data[index], HEX);
         digitalWrite(b_pin.panelCS, HIGH); // Unselect
     }
 
@@ -181,45 +181,45 @@ void Pervasive_BWRY_Medium::COG_getDataOTP()
 
 void Pervasive_BWRY_Medium::COG_initial()
 {
-	b_sendCommandData8(0xe6, 0x19); //	25 C temp
-	b_sendCommandData8(0xe0, 0x02); //
-	
-	switch (u_eScreen_EPD)
+    b_sendCommandData8(0xe6, 0x19); //	25 C temp
+    b_sendCommandData8(0xe0, 0x02); //
+
+    switch (u_eScreen_EPD)
     {
     case eScreen_EPD_741_QS_0B:
-		b_sendCommand8(0xa5); //
-		b_waitBusy();
+        b_sendCommand8(0xa5); //
+        b_waitBusy();
         break;
 
     default:
 
         break;
     }
-    
-	// Application note § 3. COG initial
-    // Work settings
-	b_sendCommandData8(0x01, COG_data[16]); // PWR
-	b_sendIndexData(0x00, &COG_data[26], 2); // PSR
-	b_sendIndexData(0x61, &COG_data[19], 4); // TRES
-	b_sendIndexData(0x00, &COG_data[17], 2); // PSR
-	b_sendIndexData(0x06, &COG_data[23], 3); // BTST_P
-	b_sendIndexData(0x03, &COG_data[30], 3); // PFS
-	b_sendCommandData8(0xe7, COG_data[33]); // PFS
-	b_sendIndexData(0x65, &COG_data[34], 4); // TRES
-	b_sendCommandData8(0x30, COG_data[38]); // PLL	
-	b_sendCommandData8(0x50, COG_data[39]); // CDI
-	b_sendIndexData(0x60, &COG_data[40], 2); // TCON
-	b_sendCommandData8(0xe3, COG_data[42]); // PWS
-	b_sendCommandData8(0xff, 0xa5); //
-	b_sendIndexData(0xef, &COG_data[43], 8); // TRES
 
-	b_sendCommandData8(0xdc, COG_data[59]); // CDI
-	b_sendCommandData8(0xdd, COG_data[60]); // CDI
-	b_sendCommandData8(0xde, COG_data[61]); // CDI
-	b_sendCommandData8(0xe8, COG_data[62]); // CDI
-	b_sendCommandData8(0xda, COG_data[63]); // CDI
-	b_sendCommandData8(0xff, 0xe3); //
-	b_sendCommandData8(0xe9, 0x01); //
+    // Application note § 3. COG initial
+    // Work settings
+    b_sendCommandData8(0x01, COG_data[16]); // PWR
+    b_sendIndexData(0x00, &COG_data[26], 2); // PSR
+    b_sendIndexData(0x61, &COG_data[19], 4); // TRES
+    b_sendIndexData(0x00, &COG_data[17], 2); // PSR
+    b_sendIndexData(0x06, &COG_data[23], 3); // BTST_P
+    b_sendIndexData(0x03, &COG_data[30], 3); // PFS
+    b_sendCommandData8(0xe7, COG_data[33]); // PFS
+    b_sendIndexData(0x65, &COG_data[34], 4); // TRES
+    b_sendCommandData8(0x30, COG_data[38]); // PLL
+    b_sendCommandData8(0x50, COG_data[39]); // CDI
+    b_sendIndexData(0x60, &COG_data[40], 2); // TCON
+    b_sendCommandData8(0xe3, COG_data[42]); // PWS
+    b_sendCommandData8(0xff, 0xa5); //
+    b_sendIndexData(0xef, &COG_data[43], 8); // TRES
+
+    b_sendCommandData8(0xdc, COG_data[59]); // CDI
+    b_sendCommandData8(0xdd, COG_data[60]); // CDI
+    b_sendCommandData8(0xde, COG_data[61]); // CDI
+    b_sendCommandData8(0xe8, COG_data[62]); // CDI
+    b_sendCommandData8(0xda, COG_data[63]); // CDI
+    b_sendCommandData8(0xff, 0xe3); //
+    b_sendCommandData8(0xe9, 0x01); //
 }
 
 void Pervasive_BWRY_Medium::COG_sendImageDataNormal(FRAMEBUFFER_CONST_TYPE frame, uint32_t sizeFrame) // First frame, blackBuffer
@@ -232,8 +232,8 @@ void Pervasive_BWRY_Medium::COG_sendImageDataNormal(FRAMEBUFFER_CONST_TYPE frame
 void Pervasive_BWRY_Medium::COG_update()
 {
 
-	b_sendCommand8(0x04); // Power on
-	b_waitBusy();
+    b_sendCommand8(0x04); // Power on
+    b_waitBusy();
 
     b_sendCommandData8(0x12, 0x00); // Display Refresh
     b_waitBusy();
@@ -245,22 +245,22 @@ void Pervasive_BWRY_Medium::COG_stopDCDC()
     b_sendCommandData8(0x02, 0x00); // Turn off DC/DC
     b_waitBusy();
 
-	uint8_t COG_temp[3] = {0x07, 0x2b, 0x01};
-	b_sendIndexData(0x00, &COG_temp[0], 3); // PSR
+    uint8_t COG_temp[3] = {0x07, 0x2b, 0x01};
+    b_sendIndexData(0x00, &COG_temp[0], 3); // PSR
 
     b_sendCommandData8(0xff, 0xa5); // Turn off DC/DC
 
-	hV_HAL_delayMilliseconds(400);
-	uint8_t COG_temp2[2] = {0xa0, 0x1e};
-	b_sendIndexData(0xee, &COG_temp2[0], 2); // PSR
+    hV_HAL_delayMilliseconds(400);
+    uint8_t COG_temp2[2] = {0xa0, 0x1e};
+    b_sendIndexData(0xee, &COG_temp2[0], 2); // PSR
 
-	hV_HAL_delayMilliseconds(4);
-	uint8_t COG_temp3[2] = {0x00, 0x00};
-	b_sendIndexData(0xee, &COG_temp3[0], 2); // PSR
+    hV_HAL_delayMilliseconds(4);
+    uint8_t COG_temp3[2] = {0x00, 0x00};
+    b_sendIndexData(0xee, &COG_temp3[0], 2); // PSR
 
-	hV_HAL_delayMilliseconds(3);
+    hV_HAL_delayMilliseconds(3);
     b_sendCommandData8(0xff, 0xe3); // Turn off DC/DC
-	hV_HAL_delayMilliseconds(6);
+    hV_HAL_delayMilliseconds(6);
 }
 //
 // --- End of Medium screens with Q film
