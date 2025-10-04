@@ -1,4 +1,4 @@
-vname: Arduino lint
+name: Arduino lint
 
 on: [push, pull_request]
 jobs:
