@@ -5,7 +5,7 @@
 //
 // Project Pervasive Displays Library Suite
 //
-// Copyright (c) Pervasive Displays, 2010-2025
+// Copyright (c) Pervasive Displays Inc., 2021-2025
 // Licence All rights reserved
 //
 // See Pervasive_BWRY_Medium.h for references
@@ -173,12 +173,11 @@ void Pervasive_BWRY_Medium::COG_getDataOTP()
     }
 
     u_flagOTP = true;
+    hV_HAL_SPI3_end();
 
 #if (DEBUG_OTP == 1) // Debug COG_data
     debugOTP(COG_data, _readBytes, COG_BWRY_MEDIUM, SCREEN_DRIVER(u_eScreen_EPD));
 #endif // DEBUG_OTP
-
-    hV_HAL_SPI3_end();
 }
 
 void Pervasive_BWRY_Medium::COG_initial()
