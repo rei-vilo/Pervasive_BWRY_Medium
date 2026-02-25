@@ -183,7 +183,7 @@ void Pervasive_BWRY_Medium::COG_getDataOTP()
 
 void Pervasive_BWRY_Medium::COG_initial()
 {
-    b_sendCommandData8(0xe6, 0x19); //	25 C temp
+    b_sendCommandData8(0xe6, u_temperature); //	25 C temp
     b_sendCommandData8(0xe0, 0x02); //
 
     switch (u_eScreen_EPD)
