@@ -254,7 +254,7 @@ void Pervasive_BWRY_Medium::COG_stopDCDC()
 
     hV_HAL_delayMilliseconds(3);
     b_sendCommandData8(0xff, 0xe3); // Turn off DC/DC
-    hV_HAL_delayMilliseconds(6);
+    hV_HAL_delayMilliseconds(6000);
 }
 //
 // --- End of Medium screens with Q film
